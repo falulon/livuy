@@ -1,7 +1,6 @@
 const staticCacheName = 'site-static-v4';
 const dynamicCacheName = 'site-dynamic-v3';
 const assets = [
-  '/',
   '/login',
   '/register',
   'fallback.html',
@@ -12,6 +11,7 @@ const assets = [
   ];
 
 const serverPriorityPages = [
+  '/',
   '/campgrounds/',
   '/dictionary/',
   '/dictionary/index_archived',

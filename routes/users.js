@@ -9,9 +9,7 @@ const forgotPass = require('../controllers/forgotPassword');
 
 
 router.route('/')
-    .get(req, res) => {
-    res.render('home')
-};
+    .get(users.home)
 
 router.route('/register')
     .get(users.renderRegister)
