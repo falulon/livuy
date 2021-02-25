@@ -1,0 +1,21 @@
+<% layout('layouts/boilerplate')%>
+
+<% for (let user of users) { %> 
+<div class="m-4 py-5"> 
+    <h6> <%=
+        user.username  %> </h6>
+    <p><%=user.email  %> </p>
+    <% if (user.isApproved === false) { %> 
+<form action="/users/<%=user._id%>/a"  method="POST" novalidate class="validated-form"
+    enctype="multipart/form-data">
+<button class="btn btn-secondary">Approve</button>
+
+<% } else { %>  <div class="text-success">Approved</div> 
+<form action="/users/<%=user._id%>/a?_method=PUT"  method="POST" novalidate class="validated-form"
+    enctype="multipart/form-data"><button class="mt-2 btn btn-outline-danger">Lock</button>
+
+<% } %> 
+</form>
+</div>
+
+<% } %> 

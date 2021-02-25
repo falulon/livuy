@@ -1,0 +1,51 @@
+<% layout('layouts/boilerplate')%>
+
+    <script>
+        function pass() {
+            const pass_1 = document.forms["myForm"].password.value;
+            const pass_2 = document.forms["myForm"].passwordConfirmed.value;
+            const resetBtn = document.getElementById('resetBtn');
+            const validatorText = document.getElementById('confirmedValidator');
+            validatorText.innerHTML = "<br>";
+            resetBtn.disabled = false;
+
+            if (pass_1 != pass_2) {
+                resetBtn.disabled = true;
+                if (pass_2.length > 0) validatorText.innerHTML = "The passwords should match";
+
+            }
+        }
+    </script>
+
+    <div class="container d-flex justify-content-center align-items-center mt-3">
+        <div class="row">
+            <div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4">
+                <div class="card shadow">
+                    <img src="https://images.unsplash.com/photo-1570569962804-5377da5be035?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1048&q=80"
+                        alt="coffee register image" class="card-img-top" />
+                    <div class="card-body">
+                        <h5 class="card-title">Reset Password</h5>
+                        <form action="/reset/<%=token%>" method="POST" name="myForm" class="validated-form" novalidate>
+                            <div class="mb-3">
+                                <label class="form-label" for="password">Password</label>
+                                <input class="form-control" type="password" id="password" name="password"
+                                    onInput="pass()" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="passwordConfirmed">Confirm Password</label>
+                                <input onInput="pass()" class="form-control" type="password" id="passwordConfirmed"
+                                    name="passwordConfirmed" required>
+                                <div class="text-danger" id="confirmedValidator"> &nbsp;
+                                </div>
+                            </div>
+                            <button class="btn btn-secondary btn-block" id="resetBtn" disabled>Set Password</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

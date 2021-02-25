@@ -1,0 +1,72 @@
+<% layout('layouts/boilerplate')%>
+
+
+    <div class="row justify-content-center">
+
+        <div class="col col-md-10 mb-5">
+            <% if (archivedValues && archivedValues.length>0) { %>
+                <div class="row justify-content-center">
+                    <div class="col col-md-10">
+                        <h2>ארכיון</h2>     <a href="javascript:history.back()" class="float-end">חזרה</a>
+
+                    </div>
+                    <% for (let value of archivedValues.reverse()) { %>
+                        <div class="important-info-shadow p-4 m-3 border-info" data-bs-toggle="collapse"
+                            href="#A<%=value._id%>" stretched-link aria-expanded="false"
+                            aria-controls="dictionary value">
+                            <div class="row justify-content-around">
+                                <div class="col-auto align-content-end">
+
+                                    <h5 class="float-end">
+                                        <%=value.titleHEB%>
+                                    </h5>
+                                </div>
+
+                                <div class="col-auto">
+                                    <h5>
+                                        <%=value.titleARB%>
+                                    </h5>
+                                </div>
+
+                                <div class="col-auto">
+                                    <h5>
+                                        <%=value.titleENG%>
+                                    </h5>
+                                </div>
+                            </div>
+                            <% if (value.link.length> 10) { %>
+                                <div class="row mt-4">
+                                    <div class="col-auto mx-auto ">
+                                        <h5> <a href="<%=value.link%>" class="card-link btn btn-outline-secondary" ">קישור</a></h5>
+                                   </div>
+                                </div>
+                            <% } %>
+    
+                        <% if( currentUser &&
+                        value.author.equals(currentUser._id) ||
+                        (currentUser && currentUser.isAdmin)) {%>
+    
+                        
+                                            <div class=" collapse m-2" id="A<%=value._id%>">
+                                                <div class="row row-cols-auto g-3 px-2">
+
+                                                    <form action="/dictionary/<%=value._id%>/makeActive?_method=PUT" method="POST">
+                                                        <button class="btn btn-sm btn-outline-secondary ">שיחזור</button>
+                                                    </form>
+
+                                                </div>
+                                    </div>
+                                    <% } %> 
+                                </div>
+                <% } %>
+
+                        </div>
+   
+                        <% } else { %>
+    <h3>אין פריטים בארכיון</h3>
+    <a href="/dictionary">חזרה</a>
+
+    <% } %>
+    
+                </div>
+

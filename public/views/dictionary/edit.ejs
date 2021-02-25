@@ -1,0 +1,124 @@
+<% layout('layouts/boilerplate')%>
+    <div class="row justify-content-center">
+        <div class="col col-md-10">
+            <h2>עריכה</h2>
+        </div>
+    </div>
+
+
+    <div class=" row justify-content-center mb-4">
+        <div class="col col-md-6 border border-primary rounded-3 p-3 m-1">
+            <form action="/dictionary/<%=value._id%>/edit?_method=PUT" method="POST" novalidate class="validated-form">
+                <div class="dictionary">
+                    <div class="row">
+
+                        <div class="col-12 col-md order-md-0">
+                            <div class="mb-3">
+                                <label class="form-label" for="hebrew"></label>
+                                <textarea type="text" name="hebrew" id="dictionary_heb" placeholder="ערך"
+                                    class="form-control" rows="1"><%=value.titleHEB%></textarea>
+                            </div>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+
+
+                        <div class="col-12 col-md order-md-1">
+                            <div class="mb-3">
+                                <label class="form-label" for="arabic"></label>
+                                <textarea type="text" name="arabic" id="dictionary_arb" placeholder="قيمة"
+                                    class="form-control" rows="1"><%=value.titleARB%></textarea>
+
+
+                            </div>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="col-12 col-md dictionary order-md-2">
+                            <div class="mb-3">
+                                <label class="form-label" for="body"></label>
+                                <textarea type="text" name="english" id="dictionary_eng" placeholder="value" rows="1"
+                                    class="form-control"><%=value.titleENG%></textarea>
+
+                            </div>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col mb-3">
+                        <label class="form-label" for="link">קישור</label>
+                        <div>
+                            <input type="url" name="link" id="dictionary_link" value="<%=value.link%>"
+                                class="form-control">
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Don't forget to enter 'https://'
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col mb-3">
+                    <div class="row">
+                        <div>
+                            <input type="checkbox" name="importantInfo" id="importantInfo" data-val="1" value="1"
+                                <%=value.importantInfo ? "checked" : "" %> >
+                            <label for="importantInfo">מידע חשוב</label>
+                        </div>
+                    </div>
+                    <div class="mb-3 mt-2 row">
+                        <label for="user" class="col col-md-4 col-form-label">שם</label>
+                        <div class="col col-md-8">
+                            <input type="text" readonly class="form-control-plaintext" id="staticEmail"
+                                value="<%=currentUser.username%>" size="50">
+                        </div>
+                    </div>
+                    <div class="mb-4 row">
+                        <label for="date"><%=value.date.toString().substring(0,16)%> <%=value.date.toString().substring(15,21)%></label>
+                                                
+                    </div>
+        
+                </div>
+                
+    <div class="row justify-content-between">
+        <div class="col-auto"> <button class="btn btn-success">שמירה</button></div>
+    </form>
+
+        <div class="col-auto">
+            <button class="btn btn-outline-danger" type="button" data-bs-toggle="collapse" data-bs-target="#deleteforsure" aria-expanded="false" aria-controls="deleteforsure">
+               X
+              </button>
+            <div class="collapse mt-3" id="deleteforsure">
+                <div class="p-2 bd-highlight">
+
+                <form action="/dictionary/<%=value._id%>/archive?_method=PUT"
+                    method="POST">
+                    <button class="btn btn-secondary">לארכיון</button>
+                </form>
+            </div>
+            <div class="p-2 bd-highlight">
+             <form class="d-inline p-1" action="/dictionary/<%=value._id%>?_method=DELETE" method="POST">
+                    <button class="btn btn-danger">מחיקה</button>
+                </form>
+            </div>
+        
+        </div>
+        </div>
+    </div>
+
+    </div>
+        </div>
+        
+    </div>

@@ -1,0 +1,22 @@
+ <% if(currentUser) {%>
+
+<nav class="nav-mobile">
+    <div class="container-fluid background-mobile ">
+        <div class="row justify-content-evenly text-center align-center fs-4 p-2">
+            <div class="col">
+                <a class="nav-link-mobile" href="/campgrounds/map"><i class="bi bi-geo-alt-fill"></i></a>
+            </div>
+            <div class="col">
+                <a class="nav-link-mobile" href="/dictionary"><i class="bi bi-file-spreadsheet-fill"></i></a>
+            </div><div class="col">
+                <a class="nav-link-mobile nav-link-logged-in" href="/campgrounds" disabled><i
+                        class="bi  bi-image-alt"></i></a>
+            </div>
+            <div class="col nav-link-logged-in">
+                <a class="nav-link-mobile" href="/"><i class="bi bi-house nav-link-mobile"></i></a>
+            </div>
+          
+        </div>
+    </div>
+</nav>
+<% } %>     
