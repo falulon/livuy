@@ -8,6 +8,11 @@ const { isAdmin, isLoggedIn } = require('../middleware');
 const forgotPass = require('../controllers/forgotPassword');
 
 
+router.route('/')
+    .get(req, res) => {
+    res.render('home')
+};
+
 router.route('/register')
     .get(users.renderRegister)
     .post(catchAsync(users.register));

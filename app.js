@@ -146,8 +146,6 @@ app.use('/campgrounds', campgroundRoutes)
 app.use('/campgrounds/:id/comments', commentRoutes)
 app.use('/dictionary', dictionaryRoutes);
 
-
-
 app.get('/', (req, res) => {
     res.render('home')
 });
