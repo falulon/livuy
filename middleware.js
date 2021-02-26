@@ -2,6 +2,7 @@ const { campgroundSchema, commentSchema, dictionarySchema } = require('./schemas
 const ExpressError = require('./utils/ExpressError');
 const Dictionary = require('./models/dictionary');
 const Campground = require('./models/campground');
+const Comment = require('./models/comment');
 
 
 module.exports.isLoggedIn = (req, res, next) => {

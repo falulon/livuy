@@ -1,6 +1,7 @@
 const staticCacheName = 'site-static-v4';
 const dynamicCacheName = 'site-dynamic-v3';
 const assets = [
+  
   '/login',
   '/register',
   'fallback.html',
@@ -11,7 +12,6 @@ const assets = [
   ];
 
 const serverPriorityPages = [
-  '/',
   '/campgrounds/',
   '/dictionary/',
   '/dictionary/index_archived',
@@ -63,50 +63,24 @@ self.addEventListener('activate', evt => {
 
 // fetch event
 self.addEventListener('fetch', evt => {
-  // if ((evt.request.url.indexOf('.png') < 0) && (evt.request.url.indexOf('.js') < 0) && (evt.request.url.indexOf('.jpg') < 0)
-  // && (evt.request.url.indexOf('.css') < 0) && (evt.request.url.indexOf('.css') < 0) && (evt.request.url.indexOf('image') < 0)
-  // && (evt.request.url.indexOf('fonts') < 0) && (evt.request.url.indexOf('.webp') < 0) && (evt.request.url.indexOf('.ico') < 0))
-  //   {console.log('fetch event', evt);};
- let fetching = true; 
-  for (let page of serverPriorityPages) {
-   if(evt.request.url.indexOf(page) > -1){
+  evt.respondWith(caches.open(dynamicCacheName).then(function (cache) {
+    return cache.match(evt.request).then(function (response) {
+      var fetchPromise = fetch(evt.request).then(function (networkResponse) {
+        cache.put(evt.request.url, networkResponse.clone());
+        limitCacheSize(dynamicCacheName, 55);
 
-    evt.respondWith(
-      fetch(evt.request).catch(function() {
-        fetching = false;
-        return caches.match(evt.request);
-      })
-    );
-
-
-
-
-//   evt.respondWith(fetch(evt.request).catch(()=>{return caches.match('/fallback.html');}));
-// return; 
-}
-  }
-  if (fetching = true) {
-
-  evt.respondWith(
-    caches.match(evt.request).then(cacheRes => {
-      return cacheRes || fetch(evt.request).then(fetchRes => {
-        return caches.open(dynamicCacheName).then(cache => {
-          cache.put(evt.request.url, fetchRes.clone());
-          // check cached items size
-          limitCacheSize(dynamicCacheName, 50);
-          return fetchRes;
-        })
+        return networkResponse;
       });
-
-    }).catch(() => {
-      if ((evt.request.url.indexOf('.png') < 0) && (evt.request.url.indexOf('.js') < 0) && (evt.request.url.indexOf('.jpg') < 0)
-      && (evt.request.url.indexOf('.css') < 0) && (evt.request.url.indexOf('.css') < 0) && (evt.request.url.indexOf('image') < 0)
-      && (evt.request.url.indexOf('fonts') < 0) && (evt.request.url.indexOf('.webp') < 0) && (evt.request.url.indexOf('.ico') < 0))
-       {
-        return caches.match('fallback.html');
-      } 
+      return response || fetchPromise;
+    });
+  }).catch(() => {
+    if ((evt.request.url.indexOf('.png') < 0) && (evt.request.url.indexOf('.js') < 0) && (evt.request.url.indexOf('.jpg') < 0)
+    && (evt.request.url.indexOf('.css') < 0) && (evt.request.url.indexOf('.css') < 0) && (evt.request.url.indexOf('image') < 0)
+    && (evt.request.url.indexOf('fonts') < 0) && (evt.request.url.indexOf('.webp') < 0) && (evt.request.url.indexOf('.ico') < 0))
+     {
+      return caches.match('./fallback.html');
+    } 
+  }));
     })
-  );
-}});
 
 
