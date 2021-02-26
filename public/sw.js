@@ -103,7 +103,7 @@ self.addEventListener('fetch', evt => {
       && (evt.request.url.indexOf('.css') < 0) && (evt.request.url.indexOf('.css') < 0) && (evt.request.url.indexOf('image') < 0)
       && (evt.request.url.indexOf('fonts') < 0) && (evt.request.url.indexOf('.webp') < 0) && (evt.request.url.indexOf('.ico') < 0))
        {
-        return caches.match('./fallback.html');
+        return caches.match('fallback.html');
       } 
     })
   );
