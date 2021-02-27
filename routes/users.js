@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const catchAsync = require('../utils/catchAsync');
-const User = require('../models/user');
+// const User = require('../models/user');
 const users = require('../controllers/users');
 const { isAdmin, isLoggedIn } = require('../middleware');
 const forgotPass = require('../controllers/forgotPassword');
@@ -10,6 +10,11 @@ const forgotPass = require('../controllers/forgotPassword');
 
 router.route('/')
     .get(users.home)
+
+
+router.route('/home')
+    .get(users.home)
+
 
 router.route('/register')
     .get(users.renderRegister)

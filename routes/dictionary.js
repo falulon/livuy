@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
-const { validateDictionary, isLoggedIn, isValueAuthor, doubleRefresh} = require('../middleware');
+const { validateDictionary, isLoggedIn, isValueAuthor} = require('../middleware');
 // const Dictionary = require('../models/dictionary');
 const dictionary = require('../controllers/dictionary');
 const ExpressError = require('../utils/ExpressError');
 const catchAsync = require('../utils/catchAsync');
 
-router.get('/', isLoggedIn, doubleRefresh, dictionary.show)
+router.get('/', isLoggedIn, dictionary.show)
 router.post('/', isLoggedIn, validateDictionary, catchAsync(dictionary.add))
 
 router.get('/index_archived', dictionary.showArchive)

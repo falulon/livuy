@@ -85,12 +85,12 @@ module.exports.isAdmin = async (req,res, next) => {
     next();
 }
 
-module.exports.doubleRefresh = async (req,res, next) => {
-    if (req.app.locals.updatedPage === true)
-     {
-        req.app.locals.updatedPage = false;
-   return res.redirect(`${req.originalUrl}?updated`);
-}
+// module.exports.doubleRefresh = async (req,res, next) => {
+//     if (req.app.locals.updatedPage === true)
+//      {
+//         req.app.locals.updatedPage = false;
+//    return res.redirect(`${req.originalUrl}?updated`);
+// }
 
-    next()
-}
+//     next()
+// }

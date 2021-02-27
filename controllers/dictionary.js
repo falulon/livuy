@@ -28,7 +28,7 @@ module.exports.add = async (req, res) => {
     req.app.locals.updatedPage = true;
     await dictionary.save();
     req.flash('success', 'Created new value!');
-    res.redirect(`/dictionary`);
+    res.redirect(`/dictionary?updated`);
 }
 
 
@@ -55,7 +55,7 @@ module.exports.update = async (req, res) => {
         await dictionary.save();
         req.app.locals.updatedPage = true;
         req.flash('success', 'Successfully updated value!');
-        res.redirect(`/dictionary`)
+        res.redirect(`/dictionary?updated`)
     }
 
 
@@ -66,7 +66,7 @@ module.exports.unArchive =  async (req, res) => {
         value.restore();
         req.app.locals.updatedPage = true;
         req.flash('success', 'The value is back to be active' );
-        res.redirect('/dictionary');
+        res.redirect('/dictionary?updated');
     }
     
 module.exports.archive =  async (req, res) => {
@@ -75,7 +75,7 @@ module.exports.archive =  async (req, res) => {
         value.archive();
         req.app.locals.updatedPage = true;
         req.flash('success', 'value archived!' );
-        res.redirect('/dictionary');
+        res.redirect('/dictionary?updated');
     }
     
 
@@ -84,6 +84,6 @@ module.exports.deleteValue = async (req, res) => {
     await Dictionary.findByIdAndDelete(valueId);
     req.app.locals.updatedPage = true;
     req.flash('success', 'Successfully deleted value')
-    res.redirect(`/dictionary`);
+    res.redirect(`/dictionary?updated`);
 }
 

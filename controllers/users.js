@@ -29,7 +29,8 @@ module.exports.renderLogin = (req, res) => {
 }
 
 module.exports.login = (req, res) => {
-    const redirectUrl = req.session.returnTo || '/campgrounds';
+    let redirectUrl = req.session.returnTo || '/campgrounds';
+    redirectUrl += '?updated';
     delete req.session.returnTo;
     req.app.locals.updatedPage = true;
     res.redirect(redirectUrl);
@@ -39,7 +40,7 @@ module.exports.logout = (req, res) => {
     req.logout();
     // req.session.destroy();
     req.flash('success', "Goodbye!");
-    res.redirect('/');
+    res.redirect('/home?updated');
 }
 
 
@@ -69,7 +70,7 @@ module.exports.approve = async (req, res) => {
     user.isApproved = true; 
     user.save();
     req.flash('success', "Approved!");
-    res.redirect('/users/all');
+    res.redirect('/users/all?updated');
 }
 
 module.exports.lock = async (req, res) => { 
@@ -78,5 +79,5 @@ module.exports.lock = async (req, res) => {
     user.isApproved = false; 
     user.save();
     req.flash('success', "User locked!");
-    res.redirect('/users/all');
+    res.redirect('/users/all?updated');
 }

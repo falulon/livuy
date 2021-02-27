@@ -13,7 +13,7 @@ module.exports.createComment = async (req, res) => {
     await campground.save();
     req.app.locals.updatedPage = true;
     req.flash('success', 'Created new comment!');
-    res.redirect(`/campgrounds/${campground._id}`);
+    res.redirect(`/campgrounds/${campground._id}?updated`);
 }
 
 
@@ -39,7 +39,7 @@ module.exports.updateComment = async (req, res) => {
     await comment.save();
     req.app.locals.updatedPage = true;
     req.flash('success', 'Comment Saved!');
-    res.redirect(`/campgrounds/${campgroundId}`);
+    res.redirect(`/campgrounds/${campgroundId}?updated`);
 
 }
 
@@ -50,7 +50,7 @@ module.exports.unArchive =  async (req, res) => {
         comment.restore();
         req.app.locals.updatedPage = true;
         req.flash('success', 'The comment is back to be active' );
-        res.redirect(`/campgrounds/${id}`);
+        res.redirect(`/campgrounds/${id}?updated`);
     }
     
 module.exports.archive =  async (req, res) => {
@@ -59,7 +59,7 @@ module.exports.archive =  async (req, res) => {
         comment.archive();
         req.app.locals.updatedPage = true;
         req.flash('success', 'Comment archived!' );
-        res.redirect('/campgrounds');
+        res.redirect('/campgrounds?updated');
     }
     
 
@@ -71,6 +71,6 @@ module.exports.deleteComment = async (req, res) => {
     await Comment.findByIdAndDelete(commentId);
     req.app.locals.updatedPage = true;
     req.flash('success', 'Successfully deleted comment')
-    res.redirect(`/campgrounds/${id}`);
+    res.redirect(`/campgrounds/${id}?updated`);
 }
 

@@ -7,6 +7,7 @@ const assets = [
   'fallback.html',
   '/stylesheets/home.css',
   '/stylesheets/app.css',
+  '/stylesheets/bootstrap.rtl.min.css',
   '/javascripts/validateForms.js',
   '/javascripts/clusterMap.js',
   '/javascripts/clusterMapStreets.js',
