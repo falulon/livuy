@@ -1,4 +1,4 @@
-@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css");
+@import url("/icons/bootstrap/bootstrap-icons.css");
 
 
 body {
@@ -64,7 +64,7 @@ a:hover { color:#ffe3c8;}
         bottom: 0;
         width: 100%;
         z-index: 4;
-        box-shadow: 1px 1px 10px 0 #4E2C0B;
+        box-shadow: 1px 1px 10px 0 #272625;
         /* border-radius: 45px 45px 0 0; */
         /* padding-bottom: 8px; */
     }

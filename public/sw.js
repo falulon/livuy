@@ -8,6 +8,9 @@ const assets = [
   '/stylesheets/home.css',
   '/stylesheets/app.css',
   '/stylesheets/bootstrap.rtl.min.css',
+  '/icons/bootstrap/bootstrap-icons.css',
+  '/icons/bootstrap/fonts/bootstrap-icons.woff',
+  '/icons/bootstrap/fonts/bootstrap-icons.woff2',
   '/javascripts/validateForms.js',
   '/javascripts/clusterMap.js',
   '/javascripts/clusterMapStreets.js',
@@ -119,7 +122,7 @@ console.log("couldn't find ", evt.request.url);
    }
 
    else {
-    console.log(evt.request.url);
+    // console.log(evt.request.url);
   evt.respondWith(caches.open(dynamicCacheName).then(function (cache) {
     return cache.match(evt.request).then(function (response) {
       var fetchPromise = fetch(evt.request).then(function (networkResponse) {
