@@ -1,8 +1,8 @@
 mapboxgl.accessToken = mapToken;
 const map = new mapboxgl.Map({
-    container: 'cluster-map',
+    container: 'cluster-map-fs',
     style: 'mapbox://styles/mapbox/streets-v11',
-    center: [35.51309668075023, 32.351301407571725],
+    center: [35.51509668075023, 32.251301407571725],
     zoom: 11
 });
 
@@ -26,7 +26,8 @@ map.on('load', function () {
     // Add a new source from our GeoJSON data and
     // set the 'cluster' option to true. GL-JS will
     // add the point_count property to your source data.
-    map.addSource('campgrounds', {
+    
+        map.addSource('campgrounds', {
         type: 'geojson',
         // Point to GeoJSON data. This example visualizes all M1.0+ earthquakes
         // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
@@ -142,5 +143,6 @@ map.on('load', function () {
 
 
     map.addControl(new mapboxgl.FullscreenControl()); //add fullscreen button
+    
 });
 

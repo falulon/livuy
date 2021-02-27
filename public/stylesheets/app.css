@@ -69,7 +69,7 @@ body {
     margin-left: 5px;
   }
 
-#cluster-map {
+#cluster-map, #cluster-map-fs {
     width: 100%;
     height: 500px;
 }
@@ -85,6 +85,12 @@ body {
   #cluster-map {
     height: 45vh;
 }
+#cluster-map-fs {
+  height: 76vh;
+  width: 94vw;
+  left: 3vw;
+}
+
 .nav-mobile {
   position: fixed;
   left: 0;
