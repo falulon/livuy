@@ -69,10 +69,31 @@ self.addEventListener('activate', evt => {
 
 // fetch event
 self.addEventListener('fetch', evt => {
-  if ((evt.request.url.indexOf('.png') > 0) || (evt.request.url.indexOf('.js') > 0) || (evt.request.url.indexOf('.jpg') > 0)
+
+  if (evt.request.url.indexOf('?updated') > -1) {
+  evt.respondWith(
+     fetch(evt.request).then(fetchRes => {
+        return caches.open(dynamicCacheName).then(cache => {
+          cache.put(evt.request.url.split('?updated')[0], fetchRes.clone());
+          return fetchRes;
+        })
+      ;
+
+    }).catch(() => {
+console.log("couldn't find ", evt.request.url);
+
+    })
+  )}
+    
+    
+
+
+
+ else if ((evt.request.url.indexOf('.png') > 0) || (evt.request.url.indexOf('.js') > 0) || (evt.request.url.indexOf('.jpg') > 0)
   || (evt.request.url.indexOf('.css') > 0) || (evt.request.url.indexOf('.woff') > 0) || (evt.request.url.indexOf('image') > 0)
   || (evt.request.url.indexOf('fonts') > 0) || (evt.request.url.indexOf('.webp') > 0) || (evt.request.url.indexOf('.ico') > 0))
-  {  
+  { 
+    
   evt.respondWith(
     caches.match(evt.request).then(cacheRes => {
       return cacheRes || fetch(evt.request).then(fetchRes => {
@@ -97,7 +118,7 @@ console.log("couldn't find ", evt.request.url);
    }
 
    else {
-
+    console.log(evt.request.url);
   evt.respondWith(caches.open(dynamicCacheName).then(function (cache) {
     return cache.match(evt.request).then(function (response) {
       var fetchPromise = fetch(evt.request).then(function (networkResponse) {

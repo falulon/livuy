@@ -40,6 +40,7 @@ reqbody.contact = req.body.contact;
     campground.images = req.files.map(f => ({ url: f.path, filename: f.filename }));
     campground.author = req.user._id;
     await campground.save();
+    req.app.locals.updatedPage = true;
     req.flash('success', 'Successfully created a new location!');
     res.redirect(`/campgrounds/${campground._id}`)
 }
@@ -92,6 +93,7 @@ module.exports.updateCampground = async (req, res) => {
         }
         await campground.updateOne({ $pull: { images: { filename: { $in: req.body.deleteImages } } } })
     }
+    req.app.locals.updatedPage = true;
     req.flash('success', 'Successfully updated!');
     res.redirect(`/campgrounds/${campground._id}`)
 }
@@ -99,6 +101,7 @@ module.exports.updateCampground = async (req, res) => {
 module.exports.deleteCampground = async (req, res) => {
     const { id } = req.params;
     await Campground.findByIdAndDelete(id);
+    req.app.locals.updatedPage = true;
     req.flash('success', 'Successfully deleted')
     res.redirect('/campgrounds');
 }

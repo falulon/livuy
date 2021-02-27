@@ -86,10 +86,10 @@
                         </div>
                     </div>
                     <div class="mb-4 row">
-                        <label for="date"><%=value.date.toString().substring(0,16)%> <%=value.date.toString().substring(15,21)%></label>
+                        <label for="date"></label>
                                                 
                     </div>
-        
+        <input type="date" name="date" id="dateInput" value="<%=value.date.toISOString().split('T')[0]%>">
                 </div>
                 
     <div class="row justify-content-between">

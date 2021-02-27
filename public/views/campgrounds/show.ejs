@@ -90,8 +90,9 @@
 
                                     <div class="card-footer border-light mx-0 text-muted">
                                         <span>
-                                            <%= comment.date.toString().substring(0,10)%>
-                                                <%= comment.date.toString().substring(15,21)%>
+                                            <%= comment.date.toString().substring(15,21)%>
+
+                                            <%=comment.date.toLocaleDateString('he-IL')%>
                                         </span>
                                         <% if( currentUser && comment.author.equals(currentUser._id) || (currentUser &&
                                             currentUser.isAdmin)) {%>
