@@ -9,6 +9,9 @@ const catchAsync = require('../utils/catchAsync');
 router.get('/', isLoggedIn, dictionary.show)
 router.post('/', isLoggedIn, validateDictionary, catchAsync(dictionary.add))
 
+router.post('/translate', isLoggedIn, validateDictionary, dictionary.showTranslate)
+
+
 router.get('/index_archived', dictionary.showArchive)
 
 router.get('/:valueId/edit', isLoggedIn, isValueAuthor, catchAsync(dictionary.edit))

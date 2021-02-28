@@ -74,7 +74,7 @@ self.addEventListener('activate', evt => {
 // fetch event
 self.addEventListener('fetch', evt => {
 
-  if (evt.request.url.indexOf('?updated') > -1) {
+  if (evt.request.url.indexOf('updated') > -1) {
   evt.respondWith(
      fetch(evt.request).then(fetchRes => {
         return caches.open(dynamicCacheName).then(cache => {

@@ -1,0 +1,229 @@
+<% layout('layouts/boilerplate')%>
+
+
+<div class="row justify-content-center mb-4" id="addV">
+    <div class="col col-md-6 border border-primary rounded-3 p-3 m-1">
+        <h5>הוספת ערך</h5>
+
+        <form action="/dictionary" method="POST" class="mb-3 validated-form" novalidate>
+            <div class="dictionary">
+                <div class="row">
+
+                                            
+    <div class="col-12 col-md order-md-0">
+        <div class="mb-3">
+            <div class="input-group-text">
+                <label class="form-label" for="hebrew"></label>
+                <textarea type="text" name="hebrew" id="dictionary_heb" placeholder="ערך"
+                    class="form-control" rows="1"><%= hebrewValue? hebrewValue : '' %></textarea>
+                <input type="submit"
+                    onclick="javascript: form.action='/dictionary/translate';"
+                    class="btn btn-sm" value="🔍">
+            </div>
+        </div>
+        <div class="valid-feedback">
+            Looks good!
+        </div>
+    </div>
+
+                    <div class="col-12 col-md order-md-1">
+                        <div class="mb-3">
+                            <label class="form-label" for="arabic"></label>
+                            <textarea type="text" name="arabic" id="dictionary_arb"
+                                placeholder="قيمة" class="form-control" rows="1"><%= arabicValue? arabicValue : '' %></textarea>
+
+                        </div>
+                           
+                                  
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+
+                                                                                  
+
+
+                    <div class="col-12 col-md dictionary order-md-2">
+                        <div class="mb-3">
+                            <label class="form-label" for="body"></label>
+                            <textarea type="text" name="english" id="dictionary_eng"
+                                placeholder="value" rows="1"
+                                class="form-control"><%= englishValue? englishValue : '' %></textarea>
+
+                        </div>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col mb-3">
+                    <label class="form-label" for="link">קישור</label>
+                    <div>
+                        <input type="url" name="link" id="dictionary_link"
+                            placeholder="https://www.addlink.com" class="form-control">
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Don't forget to enter 'https://'
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-3">
+                <div class="row">
+                    <div>
+                        <input type="checkbox" name="importantInfo" id="importantInfo"
+                            data-val="1" value="1">
+                        <label for="importantInfo">מידע חשוב</label>
+                    </div>
+                </div>
+                <div class="mb-3 mt-2 row">
+                    <label for="user" class="col col-md-4 col-form-label">שם</label>
+                    <div class="col col-md-8">
+                        <input type="text" readonly class="form-control-plaintext"
+                            id="staticEmail" value="<%=currentUser.username%>" size="50">
+                    </div>
+                </div>
+                <button class="btn btn-success">הוספה</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+    <div class="row justify-content-center">
+        <div class="col col-md-10 mb-4 id="important-info">
+            <% if (importantInfoValues) { %>
+                <div class="row justify-content-center">
+                    <div class="col col-md-10">
+                        <h2 >מידע חשוב  <a href="#add"><i class="bi bi-plus-circle float-end"></i></a></h2>
+                    </div>
+                    <% for (let value of importantInfoValues.reverse()) { %>
+                        <div class="important-info-shadow p-4 m-3 border-info" >
+                            <div class="row justify-content-around" data-bs-toggle="collapse"
+                            href="#A<%=value._id%>" stretched-link aria-expanded="false"
+                            aria-controls="dictionary value">
+                                <div class="col-auto align-content-end">
+
+                                    <h5 class="float-end">
+                                        <%=value.titleHEB%>
+                                    </h5>
+                                </div>
+
+                                <div class="col-auto">
+                                    <h5>
+                                        <%=value.titleARB%>
+                                    </h5>
+                                </div>
+
+                                <div class="col-auto">
+                                    <h5>
+                                        <%=value.titleENG%>
+                                    </h5>
+                                </div>
+                            </div>
+                            <% if (value.link.length> 10) { %>
+                                <div class="row mt-4">
+                                    <div class="col-auto mx-auto ">
+                                        <h5> <a href="<%=value.link%>"  target="_blank" rel="noopener" class="card-link btn btn-outline-secondary">קישור</a></h5>
+                                   </div>
+                                </div>
+                            <% } %>
+    
+                        <% if( currentUser &&
+                        value.author.equals(currentUser._id) ||
+                        (currentUser && currentUser.isAdmin)) {%>
+    
+                        
+                                            <div class=" collapse m-2" id="A<%=value._id%>">
+                                                <div class="row row-cols-auto g-3 px-2">
+
+                                                    <form action="/dictionary/<%=value._id%>/edit" method="GET">
+                                                        <button class="btn btn-sm btn-outline-secondary ">עריכה</button>
+                                                    </form>
+
+                                                </div>
+                                    </div>
+                                    <% } %> 
+                                </div>
+                <% } %>
+    <% } %>
+
+                        </div>
+
+                </div>
+
+
+                <div class="row justify-content-center" id="dictionary">
+
+                    <div class="col col-md-10 mb-5 mt-1">
+                        <% if (dictionaryValues) { %>
+                            <div class="row justify-content-center">
+                                <div class="col col-md-10">
+                                    <h2>מילון<a href="#add"><i class="bi bi-plus-circle float-end"></i></a></h2></h2>
+                                </div>
+                                <% for (let value of dictionaryValues.reverse()) { %>
+                                    <div class="grayshadow p-4 m-3">
+                                        <div class="row justify-content-around" data-bs-toggle="collapse"
+                            href="#A<%=value._id%>" stretched-link aria-expanded="false"
+                            aria-controls="dictionary value">
+                                <div class="col-auto align-content-end">
+
+                                    <h5 class="float-end">
+                                        <%=value.titleHEB%>
+                                    </h5>
+                                </div>
+
+                                <div class="col-auto">
+                                    <h5>
+                                        <%=value.titleARB%>
+                                    </h5>
+                                </div>
+
+                                <div class="col-auto">
+                                    <h5>
+                                        <%=value.titleENG%>
+                                    </h5>
+                                </div>
+                            </div>
+                            <% if (value.link.length> 10) { %>
+                                <div class="row mt-4">
+                                    <div class="col-auto mx-auto ">
+                                        <h5> <a href="<%=value.link%>"  target="_blank" class="card-link btn btn-outline-secondary" ">קישור</a></h5>
+                                   </div>
+                                </div>
+                            <% } %>
+    
+                        <% if( currentUser &&
+                        value.author.equals(currentUser._id) ||
+                        (currentUser && currentUser.isAdmin)) {%>
+    
+                        
+                                            <div class=" collapse m-2" id="A<%=value._id%>">
+                                                <div class="row row-cols-auto g-3 px-2">
+
+                                                    <form action="/dictionary/<%=value._id%>/edit" method="GET">
+                                                        <button class="btn btn-sm btn-outline-secondary ">עריכה</button>
+                                                    </form>
+
+                                                </div>
+                                    </div>
+                                    <% } %> 
+                                </div>
+                <% } %>
+    <% } %>
+
+                        </div>
+
+                </div>   </div>
+
+
+                            <div class="mt-3">
+                                <a href="/dictionary/index_archived">ארכיון</a>
+                                <a href="javascript:history.back()" class="float-end">חזרה</a>
+
+</div>

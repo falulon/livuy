@@ -1,5 +1,5 @@
 const Dictionary = require('../models/dictionary');
-
+const translate = require('@vitalets/google-translate-api');
 
 module.exports.show = async (req, res) => {
   
@@ -87,3 +87,46 @@ module.exports.deleteValue = async (req, res) => {
     res.redirect(`/dictionary?updated`);
 }
 
+
+module.exports.showTranslate = async (req, res) => {
+
+    const dictionary = new Dictionary();
+    dictionary.titleHEB = (req.body.hebrew); 
+    dictionary.titleENG = (req.body.english) || "";  
+    dictionary.titleARB = (req.body.arabic) || ""; 
+    dictionary.link = (req.body.link) || ""; 
+    dictionary.author = req.user._id;
+    dictionary.author_name = req.user.username;
+    dictionary.importantInfo = req.body.importantInfo || false;     
+    req.app.locals.updatedPage = true;
+
+    let hebrewValue = "" 
+    let englishValue = ""
+    let arabicValue = ""
+
+  if (dictionary.titleHEB) {
+    await translate(dictionary.titleHEB, {to: 'en'}).then(result => {
+            englishValue = result.text;
+            }).catch(err => {
+                console.error(err);
+            });
+
+        await translate(dictionary.titleHEB, {to: 'ar'}).then(result => {
+            arabicValue = (result.text);
+                                   
+            }).catch(err => {
+                console.error(err);
+            });
+    
+        await translate(dictionary.titleHEB, {to: 'he'}).then(result => {
+        hebrewValue = result.text;
+            }).catch(err => {
+                console.error(err);
+            });
+        }
+    const dictionaryValues = await Dictionary.find({importantInfo: false}).sort({date:1});
+    const importantInfoValues = await Dictionary.find({importantInfo: true}).sort({date:1});
+    await res.render('dictionary/index_trans_updated', {dictionaryValues, importantInfoValues, hebrewValue, englishValue, arabicValue});
+
+
+}
