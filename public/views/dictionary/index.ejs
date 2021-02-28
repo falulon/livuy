@@ -138,14 +138,14 @@
                         <div class="dictionary">
                             <div class="row">
 
-                                <div class="col-12 col-md order-md-0">
+                                <div class="col-12 col-lg order-md-0">
                                     <div class="mb-3">
-                                        <div class="input-group-text">
+                                        <div class="input-group-text p-0 mt-3">
                                             <label class="form-label" for="hebrew"></label>
                                             <textarea type="text" name="hebrew" id="dictionary_heb" placeholder="ערך"
                                                 class="form-control" rows="1"></textarea>
                                             <input type="submit"
-                                                onclick="javascript: form.action='/dictionary/translate';"
+                                                onclick="javascript: form.action='/dictionary/translate?updated';"
                                                 class="btn btn-sm" value="🔍">
                                         </div>
                                     </div>
@@ -157,6 +157,7 @@
 
                                 <div class="col-12 col-md order-md-1">
                                     <div class="mb-3">
+                                        <div class="input-group-text p-0 mt-3">
                                         <label class="form-label" for="arabic"></label>
                                         <textarea type="text" name="arabic" id="dictionary_arb" placeholder="قيمة"
                                             class="form-control" rows="1"></textarea>
@@ -165,12 +166,13 @@
                                         Looks good!
                                     </div>
                                 </div>
-
+                            </div>
 
 
 
                                 <div class="col-12 col-md dictionary order-md-2">
                                     <div class="mb-3">
+                                        <div class="input-group-text p-0 mt-3">
                                         <label class="form-label" for="body"></label>
                                         <textarea type="text" name="english" id="dictionary_eng" placeholder="value"
                                             rows="1" class="form-control"></textarea>
@@ -179,7 +181,7 @@
                                         Looks good!
                                     </div>
                                 </div>
-
+                            </div>
                             </div>
                         </div>
 
