@@ -112,14 +112,15 @@ module.exports.showTranslate = async (req, res) => {
             });
 
         await translate(dictionary.titleHEB, {to: 'ar'}).then(result => {
-            arabicValue = (result.text);
-                                   
+            arabicValue = (result.text) + ` (${result.pronunciation})`;                                   
             }).catch(err => {
                 console.error(err);
             });
     
         await translate(dictionary.titleHEB, {to: 'he'}).then(result => {
         hebrewValue = result.text;
+        console.log(result);
+
             }).catch(err => {
                 console.error(err);
             });
