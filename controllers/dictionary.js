@@ -100,9 +100,9 @@ module.exports.showTranslate = async (req, res) => {
     dictionary.importantInfo = req.body.importantInfo || false;     
     req.app.locals.updatedPage = true;
 
-    let hebrewValue = "" 
-    let englishValue = ""
-    let arabicValue = ""
+    let hebrewValue = "";
+    let englishValue = "";
+    let arabicValue = "";
 
   if (dictionary.titleHEB) {
     await translate(dictionary.titleHEB, {to: 'en'}).then(result => {
@@ -119,8 +119,6 @@ module.exports.showTranslate = async (req, res) => {
     
         await translate(dictionary.titleHEB, {to: 'he'}).then(result => {
         hebrewValue = result.text;
-        console.log(result);
-
             }).catch(err => {
                 console.error(err);
             });
@@ -128,6 +126,5 @@ module.exports.showTranslate = async (req, res) => {
     const dictionaryValues = await Dictionary.find({importantInfo: false}).sort({date:1});
     const importantInfoValues = await Dictionary.find({importantInfo: true}).sort({date:1});
     await res.render('dictionary/index_trans_updated', {dictionaryValues, importantInfoValues, hebrewValue, englishValue, arabicValue});
-
 
 }

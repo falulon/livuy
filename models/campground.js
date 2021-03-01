@@ -65,7 +65,8 @@ CampgroundSchema.virtual('wazeLink').get(function () {
     const coordinateY = this.geometry.coordinates[0];
     const coordinateX = this.geometry.coordinates[1];
     if (coordinateX == coordinateY) return "";
-    return `https://www.waze.com/live-map/directions?navigate=yes&to=ll.${coordinateX}%2C${coordinateY}`
+    // return `https://www.waze.com/live-map/directions?navigate=yes&to=ll.${coordinateX}%2C${coordinateY}`
+    return `waze://?ll=${coordinateX},${coordinateY}&n=T`
 });
 
 

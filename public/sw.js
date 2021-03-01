@@ -85,6 +85,7 @@ self.addEventListener('fetch', evt => {
 
     }).catch(() => {
 console.log("couldn't find ", evt.request.url);
+return caches.match('./fallback.html');
 
     })
   )}
