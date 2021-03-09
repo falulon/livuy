@@ -1,5 +1,6 @@
 const Campground = require('../models/campground');
 const Comment = require('../models/comment');
+const { cloudinary } = require("../cloudinary");
 
 module.exports.createComment = async (req, res) => {
     const campground = await Campground.findById(req.params.id);
@@ -8,6 +9,7 @@ module.exports.createComment = async (req, res) => {
     comment.author = req.user._id;
     comment.author_name = req.user.username;
     comment.campground = req.params.id; 
+    comment.images = req.files.map(f => ({ url: f.path, filename: f.filename }));
     campground.comments.push(comment);
     await comment.save();
     await campground.save();
@@ -34,9 +36,20 @@ module.exports.updateComment = async (req, res) => {
     const { id, commentId } = req.params;
     campgroundId = id;     
     const comment = await Comment.findById(commentId);
-    comment.body.unshift(`${req.body.comment.body} \n\n\n (Last edited on: ${Date().toString().substring(0,10)} 
-    ${Date().toString().substring(15,21)})`); 
+    comment.body.unshift(`${req.body.comment.body} \n\n\n (✏ ${Date().toString().substring(3,15)})`); 
+    if (req.files) {
+        const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
+        comment.images.push(...imgs);
+}
     await comment.save();
+
+    if (req.body.deleteImages) {
+        for (let filename of req.body.deleteImages) {
+            await cloudinary.uploader.destroy(filename);
+        }
+        await comment.updateOne({ $pull: { images: { filename: { $in: req.body.deleteImages } } } })
+    }
+
     req.app.locals.updatedPage = true;
     req.flash('success', 'Comment Saved!');
     res.redirect(`/campgrounds/${campgroundId}?updated`);
@@ -67,8 +80,18 @@ module.exports.archive =  async (req, res) => {
 
 module.exports.deleteComment = async (req, res) => {
     const { id, commentId } = req.params;
+    let comment = await Comment.findById(commentId);
+    if (!comment) comment = await Comment.findById(commentId).where('archivedAt').exists();
+    if (comment.images.length > 0) { 
+        console.log("deleting images");
+        for (let img of comment.images) {
+            console.log(img.filename); 
+            await cloudinary.uploader.destroy(img.filename, {type: 'upload'}, function(error,result) {
+                console.log(result, error) });
+        }}; 
     await Campground.findByIdAndUpdate(id, { $pull: { comments: commentId } });
-    await Comment.findByIdAndDelete(commentId);
+    await comment.deleteOne();
+    // await Comment.findByIdAndDelete(commentId);
     req.app.locals.updatedPage = true;
     req.flash('success', 'Successfully deleted comment')
     res.redirect(`/campgrounds/${id}?updated`);

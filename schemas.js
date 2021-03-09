@@ -41,7 +41,8 @@ phone: Joi.string().allow(null).allow("").escapeHTML()
 module.exports.commentSchema = Joi.object({
     comment: Joi.object({
         body: Joi.string().required().escapeHTML()
-    }).required()
+    }).required(),
+    deleteImages: Joi.array(), 
 })
 
 
